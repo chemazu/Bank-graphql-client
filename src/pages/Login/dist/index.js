@@ -2,6 +2,7 @@
 exports.__esModule = true;
 var react_1 = require("react");
 var react_router_dom_1 = require("react-router-dom");
+var Button_1 = require("../../components/Button");
 var client_1 = require("@apollo/client");
 var Context_1 = require("../../context/Context");
 require("./style.scss");
@@ -33,83 +34,38 @@ function Login() {
             setPassword("");
         });
     };
-    return (react_1["default"].createElement("button", { onClick: handleSubmit }, "Login")
-    // <div className="login">
-    //   <div className="login-card">
-    //     <div className="heading">
-    //       <h2>Login</h2>
-    //       <p>
-    //         If you have no account <Link to="/register">Sign up</Link>
-    //       </p>
-    //     </div>
-    //     <form>
-    //       <div className="form-item">
-    //         <p>Email Address</p>
-    //         <input
-    //           type="email"
-    //           placeholder="Type here"
-    //           value={email}
-    //           onChange={(e: any) => {
-    //             setEmail(e.target.value);
-    //           }}
-    //         />
-    //         <p
-    //           className={`prompt ${
-    //             !regexEmail.test(email) && email.length > 0
-    //               ? "visible"
-    //               : "hidden"
-    //           }`}
-    //           style={{ padding: "2px 0", fontSize: "80%", color: "red" }}
-    //         >
-    //           Wrong email format!
-    //         </p>
-    //       </div>
-    //       <div className="form-item">
-    //         <p>Password</p>
-    //         <div className="input-wrapper">
-    //           <input
-    //             type={showPassword ? "text" : "password"}
-    //             placeholder="Type your password here"
-    //             value={password}
-    //             onChange={(e: any) => {
-    //               setPassword(e.target.value);
-    //             }}
-    //           />
-    //           <p
-    //             className="hover"
-    //             onClick={() => {
-    //               setShowPassword(!showPassword);
-    //             }}
-    //           >
-    //             {" "}
-    //           </p>
-    //         </div>
-    //         <p>&nbsp;</p>
-    //       </div>
-    //       <div className="form-item">
-    //         {regexEmail.test(email) && (
-    //           <Button
-    //             title="Log in"
-    //             className="sec"
-    //             onClick={(e: any) => {
-    //               handleSubmit(e);
-    //             }}
-    //           />
-    //         )}
-    //         {!regexEmail.test(email) && (
-    //           <Button
-    //             title="Log in"
-    //             className="disabled"
-    //             onClick={(e: any) => {
-    //               e.preventDefault();
-    //             }}
-    //           />
-    //         )}
-    //         <p>&nbsp;</p>
-    //       </div>
-    //     </form>
-    //   </div>
-    // </div>
-    );
+    return (
+    // <button onClick={handleSubmit}>Login</button>
+    react_1["default"].createElement("div", { className: "login" },
+        react_1["default"].createElement("div", { className: "login-card" },
+            react_1["default"].createElement("div", { className: "heading" },
+                react_1["default"].createElement("h2", null, "Login"),
+                react_1["default"].createElement("p", null,
+                    "If you have no account ",
+                    react_1["default"].createElement(react_router_dom_1.Link, { to: "/register" }, "Sign up"))),
+            react_1["default"].createElement("form", null,
+                react_1["default"].createElement("div", { className: "form-item" },
+                    react_1["default"].createElement("p", null, "Email Address"),
+                    react_1["default"].createElement("input", { placeholder: "Type here", value: email, onChange: function (e) {
+                            setEmail(e.target.value);
+                        } })),
+                react_1["default"].createElement("div", { className: "form-item" },
+                    react_1["default"].createElement("p", null, "Password"),
+                    react_1["default"].createElement("div", { className: "input-wrapper" },
+                        react_1["default"].createElement("input", { type: showPassword ? "text" : "password", placeholder: "Type your password here", value: password, onChange: function (e) {
+                                setPassword(e.target.value);
+                            } }),
+                        react_1["default"].createElement("p", { className: "hover", onClick: function () {
+                                setShowPassword(!showPassword);
+                            } }, " ")),
+                    react_1["default"].createElement("p", null, "\u00A0")),
+                react_1["default"].createElement("div", { className: "form-item" },
+                    email.length > 1 && (react_1["default"].createElement(Button_1["default"], { title: "Log in", className: "sec", onClick: function (e) {
+                            handleSubmit(e);
+                        } })),
+                    email.length < 1 && (react_1["default"].createElement(Button_1["default"], { title: "Log in", className: "disabled", onClick: function (e) {
+                            e.preventDefault();
+                        } })),
+                    react_1["default"].createElement("p", null, "\u00A0"))))));
 }
 exports["default"] = Login;

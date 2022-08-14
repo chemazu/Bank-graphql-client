@@ -9,7 +9,7 @@ var Context_1 = require("../../context/Context");
 require("./style.scss");
 function Register() {
     var register = react_1["default"].useContext(Context_1.Context).register;
-    var fName = register.fName, setFName = register.setFName, lName = register.lName, setLName = register.setLName, email = register.email, setEmail = register.setEmail, password = register.password, setPassword = register.setPassword, showPassword = register.showPassword, setShowPassword = register.setShowPassword, phone = register.phone, setPhone = register.setPhone, type = register.type, setType = register.setType, setCurrency = register.setCurrency;
+    var fName = register.fName, setFName = register.setFName, lName = register.lName, setLName = register.setLName, email = register.email, setEmail = register.setEmail, password = register.password, setPassword = register.setPassword, showPassword = register.showPassword, setShowPassword = register.setShowPassword, phone = register.phone, setPhone = register.setPhone, type = register.type, setType = register.setType, setCurrency = register.setCurrency, setLoggedInUser = register.setLoggedInUser;
     var navigate = react_router_dom_1.useNavigate();
     var regexFinal = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[-+_!@#$%^&*., ?])(?=.*[\d]).+$/;
     var regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -29,12 +29,14 @@ function Register() {
             }
         })
             .then(function (res) {
-            console.log(res, "res", data);
-            // localStorage.setItem("token", "");
-            // localStorage.setItem("token", "res.data.signup.token");
-            // if (localStorage.getItem("token")) {
-            //   navigate("/dashboard");
-            // }
+            // console.log(res, "res", res.data.createUser.token);
+            // console.log(res, "res", res.data.createUser.user);
+            localStorage.setItem("token", res.data.createUser.token);
+            localStorage.setItem("user", JSON.stringify(res.data.createUser.user));
+            setLoggedInUser(res.data.createUser.user);
+            if (localStorage.getItem("token")) {
+                navigate("/dashboard");
+            }
         })["catch"](function (err) {
             console.log(err);
         })["finally"](function () {
@@ -51,7 +53,9 @@ function Register() {
             navigate("/dashboard");
         }
     }, [data, error, navigate]);
-    return (react_1["default"].createElement("div", { className: "register" },
+    return (
+    // <button onClick={handleSubmit}>Register</button>
+    react_1["default"].createElement("div", { className: "register" },
         react_1["default"].createElement("div", { className: "register-card" },
             react_1["default"].createElement("div", { className: "heading" },
                 react_1["default"].createElement("h2", null, "Create an Account"),

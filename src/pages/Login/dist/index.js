@@ -10,9 +10,9 @@ var schema_1 = require("../../graphql/schema");
 function Login() {
     var navigate = react_router_dom_1.useNavigate();
     // const [login] = useMutation(LOGIN);
-    var login = client_1.useMutation(schema_1.LOGIN)[0];
+    var _a = client_1.useMutation(schema_1.LOGIN), login = _a[0], data = _a[1].data;
     var loginData = react_1["default"].useContext(Context_1.Context).login;
-    var email = loginData.email, setEmail = loginData.setEmail, password = loginData.password, setPassword = loginData.setPassword, showPassword = loginData.showPassword, setShowPassword = loginData.setShowPassword;
+    var email = loginData.email, setEmail = loginData.setEmail, password = loginData.password, setPassword = loginData.setPassword, showPassword = loginData.showPassword, setShowPassword = loginData.setShowPassword, setLoggedInUser = loginData.setLoggedInUser;
     var regexEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     // let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     var handleSubmit = function (e) {
@@ -24,8 +24,10 @@ function Login() {
             }
         })
             .then(function (res) {
-            localStorage.setItem("wazoKey", res.data.login.token);
-            if (localStorage.getItem("wazoKey")) {
+            localStorage.setItem("token", res.data.login.token);
+            setLoggedInUser(res.data.login.user);
+            localStorage.setItem("user", JSON.stringify(res.data.login.user));
+            if (localStorage.getItem("token")) {
                 navigate("/dashboard");
             }
         })

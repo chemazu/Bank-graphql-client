@@ -9,8 +9,11 @@ import transaction from "../../assests/img/transaction.svg";
 import searchicon from "../../assests/img/search-icon.svg";
 import TableBody from "./table-body";
 import TransactionModal from "./transaction-modal";
+import { Context } from "../../context/Context";
+import { ContextType } from "../../@types/context.d";
 
 export default function Dashboard() {
+  let { dashboard } = React.useContext(Context) as ContextType;
   const [showTransactionModal, setShowTransactionModal] = React.useState(false);
   // const [showSearchModal, setShowSearchModal] = React.useState(false);
   let [transactionType, setTransactionType] = React.useState("");
@@ -18,6 +21,10 @@ export default function Dashboard() {
     const randomColor = Math.floor(Math.random() * 16777215).toString(16);
     return `#${randomColor}`;
   };
+  // console.log(name.split(" "), "name");
+  let user = JSON.parse(localStorage.getItem("user") || "{}");
+  let { name, phone, balance, currency } = user;
+  let nameArr = name.split(" ");
 
   return (
     <div className="dashboard">
@@ -47,12 +54,18 @@ export default function Dashboard() {
                 backgroundColor: randomColor(),
               }}
             >
-              <p>CC</p>
+              <p>
+                {nameArr[0].charAt(0)}
+                {nameArr[1].charAt(0)}
+              </p>
             </div>
             <div className="user-info">
-              <p>Chandler Chisom</p>
-              <p>080123456030</p>
-              <p>50,000</p>
+              <p>{name}</p>
+              <p>{phone}</p>
+              <p>
+                {currency}
+                {balance}
+              </p>
             </div>
           </div>
           <div className="transaction">

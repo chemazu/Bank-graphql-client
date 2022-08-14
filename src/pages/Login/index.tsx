@@ -9,7 +9,7 @@ import { LOGIN } from "../../graphql/schema";
 export default function Login() {
   let navigate = useNavigate();
   // const [login] = useMutation(LOGIN);
-  const [login] = useMutation(LOGIN);
+  const [login, { data }] = useMutation(LOGIN);
 
   const { login: loginData } = React.useContext(Context) as ContextType;
   let {
@@ -19,6 +19,7 @@ export default function Login() {
     setPassword,
     showPassword,
     setShowPassword,
+    setLoggedInUser,
   } = loginData;
   let regexEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
   // let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -32,8 +33,10 @@ export default function Login() {
       },
     })
       .then((res: any) => {
-        localStorage.setItem("wazoKey", res.data.login.token);
-        if (localStorage.getItem("wazoKey")) {
+        localStorage.setItem("token", res.data.login.token);
+        setLoggedInUser(res.data.login.user);
+        localStorage.setItem("user", JSON.stringify(res.data.login.user));
+        if (localStorage.getItem("token")) {
           navigate("/dashboard");
         }
       })

@@ -17,6 +17,7 @@ export default function Provider({ children }: { children: React.ReactNode }) {
   let [type, setType] = React.useState("");
   let [currency, setCurrency] = React.useState("USD");
   let [phone, setPhone] = React.useState("");
+  let [loggedInUser, setLoggedInUser] = React.useState<any>({});
 
   let register = {
     fName,
@@ -25,7 +26,8 @@ export default function Provider({ children }: { children: React.ReactNode }) {
     setLName,
     email,
     setEmail,
-    phone, setPhone,
+    phone,
+    setPhone,
     password,
     setPassword,
     showPassword,
@@ -34,6 +36,8 @@ export default function Provider({ children }: { children: React.ReactNode }) {
     setType,
     currency,
     setCurrency,
+    loggedInUser,
+    setLoggedInUser,
   };
   let login = {
     email,
@@ -42,6 +46,8 @@ export default function Provider({ children }: { children: React.ReactNode }) {
     setPassword,
     showPassword,
     setShowPassword,
+    loggedInUser,
+    setLoggedInUser,
   };
   let dashboard = {
     loginBtn,
@@ -54,8 +60,13 @@ export default function Provider({ children }: { children: React.ReactNode }) {
     setShowEdit,
     confirmVerified,
     setConfirmVerified,
+    loggedInUser,
   };
-
+  // React.useEffect(() => {
+  //   if (!localStorage.getItem("token")) {
+  //     setLoggedInUser({});
+  //   }
+  // },[]);
   const value = { register, login, dashboard };
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }

@@ -25,6 +25,7 @@ export default function Register() {
     type,
     setType,
     setCurrency,
+    setLoggedInUser,
   } = register;
   let navigate = useNavigate();
   let regexFinal =
@@ -47,12 +48,15 @@ export default function Register() {
       },
     })
       .then((res: any) => {
-        console.log(res, "res", data);
-        // localStorage.setItem("token", "");
-        // localStorage.setItem("token", "res.data.signup.token");
-        // if (localStorage.getItem("token")) {
-        //   navigate("/dashboard");
-        // }
+        // console.log(res, "res", res.data.createUser.token);
+        // console.log(res, "res", res.data.createUser.user);
+
+        localStorage.setItem("token", res.data.createUser.token);
+        localStorage.setItem("user", JSON.stringify(res.data.createUser.user));
+        setLoggedInUser(res.data.createUser.user);
+        if (localStorage.getItem("token")) {
+          navigate("/dashboard");
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -72,6 +76,7 @@ export default function Register() {
     }
   }, [data, error, navigate]);
   return (
+    // <button onClick={handleSubmit}>Register</button>
     <div className="register">
       <div className="register-card">
         <div className="heading">

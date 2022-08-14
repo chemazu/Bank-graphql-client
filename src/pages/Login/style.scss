@@ -72,3 +72,26 @@
     }
   }
 }
+@media screen and (max-width: 768px) {
+  .login {
+    margin: 0;
+    padding: auto;
+    background: #fff;
+
+    .login-card {
+      width: 100%;
+      padding: 0 10%;
+      height: 90%;
+      .heading{
+        padding-bottom: 1rem;
+      }
+      form{
+        .form-row{
+          grid-template-columns: 1fr;
+          grid-gap: 0px;
+        }
+      }
+
+    }
+  }
+} ;

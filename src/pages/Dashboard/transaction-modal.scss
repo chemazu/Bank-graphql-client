@@ -1,0 +1,109 @@
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .content {
+    background-color: #fff;
+    width: 40%;
+    padding: 2rem 0;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 50%;
+    box-sizing: border-box;
+    h2 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .options {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      width: 80%;
+
+      p {
+        width: 40%;
+        // height: 3rem;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        color: #858383;
+
+        padding: 1rem;
+        font-size: 1.2rem;
+        font-weight: bold;
+        text-align: center;
+      }
+      .active{
+        background-color: rgba(57, 205, 205, 0.6);
+        color: #fff;
+        border-color: rgba(57, 205, 205, 0.6);
+
+      }
+    }
+    .inputs {
+      width: 80%;
+      padding: 20px 0;
+      input {
+        border: 1px solid #efeff0;
+        border-radius: 4px;
+        padding: 7.5px;
+        width: 100%;
+        background-color: #fff;
+        color: #858383;
+        margin-bottom: 20px;
+      }
+      p {
+        font-size: 14px;
+        color: #858383;
+        padding: 7.5px;
+        margin-bottom: 20px;
+        border: 1px solid #efeff0;
+
+
+        
+
+
+      }
+      span{
+        color: #000;
+      }
+    }
+    .buttons {
+      width: 80%;
+      display: flex;
+      justify-content: space-between;
+      button {
+        border: 0;
+        padding: 1rem 1.5rem;
+        width: 40%;
+        text-align: center;
+      }
+      .confirm {
+        background-color: #213f7d;
+        color: #fff;
+      }
+      .cancel {
+        background-color: red;
+      }
+    }
+  }
+}
+@media screen and (max-width: 480px) {
+  .modal {
+    .content {
+      width: 90%;
+    }
+  }
+}

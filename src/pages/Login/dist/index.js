@@ -1,49 +1,39 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Button from "../../components/Button";
-import { useMutation } from "@apollo/client";
-import { Context } from "../../context/Context";
-import { ContextType } from "../../@types/context.d";
-import "./style.scss";
-import { LOGIN } from "../../graphql/schema";
-export default function Login() {
-  let navigate = useNavigate();
-  // const [login] = useMutation(LOGIN);
-  const [login] = useMutation(LOGIN);
-
-  const { login: loginData } = React.useContext(Context) as ContextType;
-  let {
-    email,
-    setEmail,
-    password,
-    setPassword,
-    showPassword,
-    setShowPassword,
-  } = loginData;
-  let regexEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-  // let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-
-  let handleSubmit = (e: any) => {
-    e.preventDefault();
-    login({
-      variables: {
-        phone: email,
-        password,
-      },
-    })
-      .then((res: any) => {
-        localStorage.setItem("wazoKey", res.data.login.token);
-        if (localStorage.getItem("wazoKey")) {
-          navigate("/dashboard");
-        }
-      })
-      .then(() => {
-        setEmail("");
-        setPassword("");
-      });
-  };
-  return (
-    <button onClick={handleSubmit}>Login</button>
+"use strict";
+exports.__esModule = true;
+var react_1 = require("react");
+var react_router_dom_1 = require("react-router-dom");
+var client_1 = require("@apollo/client");
+var Context_1 = require("../../context/Context");
+require("./style.scss");
+var schema_1 = require("../../graphql/schema");
+function Login() {
+    var navigate = react_router_dom_1.useNavigate();
+    // const [login] = useMutation(LOGIN);
+    var login = client_1.useMutation(schema_1.LOGIN)[0];
+    var loginData = react_1["default"].useContext(Context_1.Context).login;
+    var email = loginData.email, setEmail = loginData.setEmail, password = loginData.password, setPassword = loginData.setPassword, showPassword = loginData.showPassword, setShowPassword = loginData.setShowPassword;
+    var regexEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+    // let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    var handleSubmit = function (e) {
+        e.preventDefault();
+        login({
+            variables: {
+                phone: email,
+                password: password
+            }
+        })
+            .then(function (res) {
+            localStorage.setItem("wazoKey", res.data.login.token);
+            if (localStorage.getItem("wazoKey")) {
+                navigate("/dashboard");
+            }
+        })
+            .then(function () {
+            setEmail("");
+            setPassword("");
+        });
+    };
+    return (react_1["default"].createElement("button", { onClick: handleSubmit }, "Login")
     // <div className="login">
     //   <div className="login-card">
     //     <div className="heading">
@@ -52,7 +42,6 @@ export default function Login() {
     //         If you have no account <Link to="/register">Sign up</Link>
     //       </p>
     //     </div>
-
     //     <form>
     //       <div className="form-item">
     //         <p>Email Address</p>
@@ -116,11 +105,11 @@ export default function Login() {
     //             }}
     //           />
     //         )}
-
     //         <p>&nbsp;</p>
     //       </div>
     //     </form>
     //   </div>
     // </div>
-  );
+    );
 }
+exports["default"] = Login;

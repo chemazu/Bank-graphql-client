@@ -34,7 +34,7 @@ export default function Register() {
   let regexNum = /\d/;
   let regexSym = /^(?=.*[-+_!@#$%^&*., ?]).+$/;
   const [createUser, { data, loading, error }] = useMutation(CREATEUSER);
-  console.log(data, loading, error);
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
     createUser({
@@ -47,7 +47,7 @@ export default function Register() {
       },
     })
       .then((res: any) => {
-        console.log("first");
+        console.log(res, "res", data);
         // localStorage.setItem("token", "");
         // localStorage.setItem("token", "res.data.signup.token");
         // if (localStorage.getItem("token")) {

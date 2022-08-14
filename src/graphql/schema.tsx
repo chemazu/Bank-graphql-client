@@ -18,6 +18,18 @@ import { gql } from "@apollo/client";
   }
 `;
 export { CREATEUSER };
+const LOGIN = gql`
+ mutation Mutation($phone: String!, $password: String!) {
+  login(phone: $phone, password: $password) {
+    user {
+      name
+    }
+    token
+  }
+}
+`;
+export { LOGIN };
+
 
 // export const createUser= gql`
 //   mutation createUser(
@@ -69,7 +81,7 @@ export { CREATEUSER };
 // `;
 
 // OLD CODE:
-export const LOGIN = gql`
+export const LOGINs = gql`
   mutation LOGIN($email: String!, $password: String!) {
     login(email: $email, password: $password) {
       user {

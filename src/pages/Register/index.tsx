@@ -1,5 +1,5 @@
 import React from "react";
-import { CREATEUSER } from "../../graphql/schema";
+import { CREATEUSER } from "../../graphql/schema/account.schema";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import { useMutation } from "@apollo/client";
@@ -46,6 +46,14 @@ export default function Register() {
         type,
         email,
       },
+      onCompleted: ({createUser}) => {
+        console.log(createUser);
+        setLoggedInUser(createUser.user);
+        localStorage.setItem("user", JSON.stringify(createUser.user));
+        if (localStorage.getItem("user")) {
+          navigate("/dashboard");
+        }
+      }
     })
       .then((res: any) => {
         // console.log(res, "res", res.data.createUser.token);

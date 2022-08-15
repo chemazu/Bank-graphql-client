@@ -1,7 +1,7 @@
 "use strict";
 exports.__esModule = true;
 var react_1 = require("react");
-var schema_1 = require("../../graphql/schema");
+var account_schema_1 = require("../../graphql/schema/account.schema");
 var react_router_dom_1 = require("react-router-dom");
 var Button_1 = require("../../components/Button");
 var client_1 = require("@apollo/client");
@@ -16,7 +16,7 @@ function Register() {
     var regexUpper = /^(?=.*[A-Z]).+$/;
     var regexNum = /\d/;
     var regexSym = /^(?=.*[-+_!@#$%^&*., ?]).+$/;
-    var _a = client_1.useMutation(schema_1.CREATEUSER), createUser = _a[0], _b = _a[1], data = _b.data, loading = _b.loading, error = _b.error;
+    var _a = client_1.useMutation(account_schema_1.CREATEUSER), createUser = _a[0], _b = _a[1], data = _b.data, loading = _b.loading, error = _b.error;
     var handleSubmit = function (e) {
         e.preventDefault();
         createUser({
@@ -26,6 +26,15 @@ function Register() {
                 password: password,
                 type: type,
                 email: email
+            },
+            onCompleted: function (_a) {
+                var createUser = _a.createUser;
+                console.log(createUser);
+                setLoggedInUser(createUser.user);
+                localStorage.setItem("user", JSON.stringify(createUser.user));
+                if (localStorage.getItem("user")) {
+                    navigate("/dashboard");
+                }
             }
         })
             .then(function (res) {

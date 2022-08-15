@@ -6,28 +6,23 @@ var Button_1 = require("../../components/Button");
 var client_1 = require("@apollo/client");
 var Context_1 = require("../../context/Context");
 require("./style.scss");
-var schema_1 = require("../../graphql/schema");
+var account_schema_1 = require("../../graphql/schema/account.schema");
 function Login() {
     var navigate = react_router_dom_1.useNavigate();
-    // const [login] = useMutation(LOGIN);
-    var _a = client_1.useMutation(schema_1.LOGIN), login = _a[0], data = _a[1].data;
+    var _a = client_1.useMutation(account_schema_1.LOGIN), login = _a[0], _b = _a[1], data = _b.data, error = _b.error, loading = _b.loading;
     var loginData = react_1["default"].useContext(Context_1.Context).login;
-    var email = loginData.email, setEmail = loginData.setEmail, password = loginData.password, setPassword = loginData.setPassword, showPassword = loginData.showPassword, setShowPassword = loginData.setShowPassword, setLoggedInUser = loginData.setLoggedInUser;
-    var regexEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-    // let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    var email = loginData.email, setEmail = loginData.setEmail, password = loginData.password, setPassword = loginData.setPassword, showPassword = loginData.showPassword, setShowPassword = loginData.setShowPassword;
     var handleSubmit = function (e) {
         e.preventDefault();
         login({
             variables: {
                 phone: email,
                 password: password
-            }
-        })
-            .then(function (res) {
-            localStorage.setItem("token", res.data.login.token);
-            setLoggedInUser(res.data.login.user);
-            localStorage.setItem("user", JSON.stringify(res.data.login.user));
-            if (localStorage.getItem("token")) {
+            },
+            onCompleted: function (_a) {
+                var login = _a.login;
+                localStorage.setItem("token", login.token);
+                localStorage.setItem("user", JSON.stringify(login.user));
                 navigate("/dashboard");
             }
         })
@@ -68,6 +63,7 @@ function Login() {
                     email.length < 1 && (react_1["default"].createElement(Button_1["default"], { title: "Log in", className: "disabled", onClick: function (e) {
                             e.preventDefault();
                         } })),
-                    react_1["default"].createElement("p", null, "\u00A0"))))));
+                    react_1["default"].createElement("p", null, "\u00A0")),
+                loading && react_1["default"].createElement("p", null, "Loading.....")))));
 }
 exports["default"] = Login;

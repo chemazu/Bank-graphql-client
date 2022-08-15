@@ -5,12 +5,10 @@ import { useMutation } from "@apollo/client";
 import { Context } from "../../context/Context";
 import { ContextType } from "../../@types/context.d";
 import "./style.scss";
-import { LOGIN } from "../../graphql/schema";
+import { LOGIN } from "../../graphql/schema/account.schema";     
 export default function Login() {
   let navigate = useNavigate();
-  // const [login] = useMutation(LOGIN);
-  const [login, { data }] = useMutation(LOGIN);
-
+  const [login, { data, error, loading }] = useMutation(LOGIN);
   const { login: loginData } = React.useContext(Context) as ContextType;
   let {
     email,
@@ -19,10 +17,7 @@ export default function Login() {
     setPassword,
     showPassword,
     setShowPassword,
-    setLoggedInUser,
   } = loginData;
-  let regexEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-  // let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
   let handleSubmit = (e: any) => {
     e.preventDefault();
@@ -31,20 +26,19 @@ export default function Login() {
         phone: email,
         password,
       },
+      onCompleted: ({ login }) => {
+        localStorage.setItem("token", login.token);
+        localStorage.setItem("user", JSON.stringify(login.user));
+        navigate("/dashboard");
+      },
     })
-      .then((res: any) => {
-        localStorage.setItem("token", res.data.login.token);
-        setLoggedInUser(res.data.login.user);
-        localStorage.setItem("user", JSON.stringify(res.data.login.user));
-        if (localStorage.getItem("token")) {
-          navigate("/dashboard");
-        }
-      })
       .then(() => {
         setEmail("");
         setPassword("");
       });
   };
+
+
   return (
     // <button onClick={handleSubmit}>Login</button>
     <div className="login">
@@ -89,6 +83,7 @@ export default function Login() {
             </div>
             <p>&nbsp;</p>
           </div>
+
           <div className="form-item">
             {email.length > 1 && (
               <Button
@@ -111,6 +106,7 @@ export default function Login() {
 
             <p>&nbsp;</p>
           </div>
+          {loading && <p>Loading.....</p>}
         </form>
       </div>
     </div>
